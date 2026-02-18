@@ -1,10 +1,18 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = 'nodejs';
 
 export async function POST(request: Request) {
     try {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
+            return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
+        }
+
+        // Initialize inside the handler so env vars are available at runtime
+        const resend = new Resend(apiKey);
+
         const { name, email, company, service, budget, timeline, message } = await request.json();
 
         const { data, error } = await resend.emails.send({
@@ -30,6 +38,6 @@ export async function POST(request: Request) {
 
         return NextResponse.json(data);
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
 }
