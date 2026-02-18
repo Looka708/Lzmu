@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+:root {
+  --lime: #B9FF66;
+  --lime-hover: #a8f050;
+  --dark: #191A23;
+  --btn-shadow: 0 4px 0 0 #191A23;
+  --btn-shadow-pressed: 0 1px 0 0 #191A23;
+}
+
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.display-font {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ============================================
+   BRAND UTILITIES
+   ============================================ */
+.bg-lime-brand {
+  background-color: var(--lime);
+}
+
+.text-lime-brand {
+  color: var(--lime);
+}
+
+.card-shadow {
+  box-shadow: 0 5px 0 0 var(--dark);
+}
+
+/* Selection color */
+::selection {
+  background-color: var(--lime);
+  color: black;
+}
+
+/* ============================================
+   BUTTON ANIMATIONS — GLOBAL
+   All <button> and <a> styled as buttons get
+   these micro-animations automatically.
+   ============================================ */
+
+/* --- Base button reset & shared transitions --- */
+button,
+a.btn,
+[role="button"] {
+  position: relative;
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.18s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  will-change: transform;
+}
+
+/* --- Primary dark buttons (bg-zinc-900) --- */
+button.bg-zinc-900,
+a.bg-zinc-900 {
+  box-shadow: var(--btn-shadow);
+}
+
+button.bg-zinc-900:hover,
+a.bg-zinc-900:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 0 var(--dark);
+}
+
+button.bg-zinc-900:active,
+a.bg-zinc-900:active {
+  transform: translateY(2px);
+  box-shadow: var(--btn-shadow-pressed);
+}
+
+/* --- Lime / brand buttons --- */
+button.bg-\[#B9FF66\],
+a.bg-\[#B9FF66\] {
+  box-shadow: var(--btn-shadow);
+}
+
+button.bg-\[#B9FF66\]:hover,
+a.bg-\[#B9FF66\]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 0 var(--dark);
+  background-color: var(--lime-hover);
+}
+
+button.bg-\[#B9FF66\]:active,
+a.bg-\[#B9FF66\]:active {
+  transform: translateY(2px);
+  box-shadow: var(--btn-shadow-pressed);
+}
+
+/* --- White buttons --- */
+button.bg-white,
+a.bg-white {
+  box-shadow: var(--btn-shadow);
+}
+
+button.bg-white:hover,
+a.bg-white:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 0 var(--dark);
+}
+
+button.bg-white:active,
+a.bg-white:active {
+  transform: translateY(2px);
+  box-shadow: var(--btn-shadow-pressed);
+}
+
+/* --- Outline / border buttons (nav "Get a Quote") --- */
+button.border,
+a.border {
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.18s ease;
+}
+
+button.border:hover,
+a.border:hover {
+  transform: translateY(-2px);
+}
+
+button.border:active,
+a.border:active {
+  transform: translateY(1px);
+}
+
+/* --- Filter / tab buttons (portfolio page) --- */
+button.rounded-xl,
+button.rounded-2xl {
+  transition:
+    transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+button.rounded-xl:hover,
+button.rounded-2xl:hover {
+  transform: scale(1.04);
+}
+
+button.rounded-xl:active,
+button.rounded-2xl:active {
+  transform: scale(0.97);
+}
+
+/* --- Arrow circle buttons (learn more / ArrowUpRight circles) --- */
+.arrow-btn {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s ease;
+}
+
+.arrow-btn:hover {
+  transform: scale(1.15) rotate(45deg);
+}
+
+/* --- Ripple effect on click --- */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+button::after,
+a.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+button:active::after,
+a.btn:active::after {
+  animation: ripple 0.45s ease-out forwards;
+}
+
+/* --- Shimmer sweep on primary buttons --- */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+button.bg-zinc-900::before,
+a.bg-zinc-900::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 60%);
+  background-size: 200% auto;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+button.bg-zinc-900:hover::before,
+a.bg-zinc-900:hover::before {
+  opacity: 1;
+  animation: shimmer 1.4s linear infinite;
+}
+
+/* ============================================
+   HERO FLOATING ICON ANIMATION
+   ============================================ */
+@keyframes heroFloat {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.hero-icon-float {
+  animation: heroFloat 3s ease-in-out infinite;
+}
+
+/* ============================================
+   LOGO MARQUEE TRACK
+   ============================================ */
+.logo-track {
+  display: flex;
+  gap: 4rem;
+  min-width: max-content;
+  align-items: center;
+  filter: grayscale(1);
+  opacity: 0.8;
+}
+
+/* ============================================
+   SMOOTH PAGE TRANSITIONS
+   ============================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main>* {
+  animation: fadeUp 0.5s ease both;
+}
+
+/* ============================================
+   FLIP LINK ANIMATION
+   ============================================ */
+.flip-link {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: 1.2;
+}
+
+.flip-link-inner {
+  display: flex;
+  flex-direction: column;
+  height: 1.2em;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.flip-link:hover .flip-link-inner {
+  transform: translateY(-50%);
+}
+
+.flip-link-text {
+  height: 1.2em;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.flip-link-text:last-child {
+  color: #B9FF66;
+  /* Lime color on flip */
+}
+
+/* For buttons that already have a dark background, keep the second text white or lime */
+.bg-zinc-900 .flip-link-text:last-child,
+.hover\:bg-zinc-900:hover .flip-link-text:last-child {
+  color: #B9FF66;
+}
